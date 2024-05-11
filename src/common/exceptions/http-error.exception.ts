@@ -12,12 +12,6 @@ export class NeedAuthException extends HttpException {
 	}
 }
 
-export class TokenNeededException extends HttpException {
-	constructor() {
-		super({ message: 'Нужен токен' }, HttpStatus.BAD_REQUEST);
-	}
-}
-
 export class BadRequestException extends HttpException {
 	constructor(code: string | number) {
 		super({ message: 'Сервер вернул ошибку, статус ' + code }, HttpStatus.BAD_REQUEST);

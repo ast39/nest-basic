@@ -1,8 +1,33 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  schemas  = ["main"]
+}
+
+model User {
+  userId   Int          @id @default(autoincrement()) @map("user_id")
+  email    String       @unique @map("email") @db.VarChar(128)
+  password String       @map("password") @db.VarChar(128)
+  name     String?      @map("name") @db.VarChar(128)
+  status   EUserStatus? @default(ACTIVE) @map("status")
+
+  refreshToken String?  @map("refresh_token") @db.VarChar(128)
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt    DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@map("users")
+  @@schema("main")
+}
+
+enum EUserStatus {
+  BLOCKED @map("0")
+  ACTIVE  @map("1")
+
+  @@map("user_status_enum")
+  @@schema("main")
 }

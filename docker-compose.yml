@@ -18,12 +18,12 @@ services:
       - pg_data:/var/lib/postgresql/data
     restart: always
     networks:
-      - pmp_media_network
+      - ast_nest_network
 
   api:
     container_name: ${API_CONTAINER}
     build:
-      dockerfile: Dockerfile
+      dockerfile: docker/Dockerfile
     ports:
       - "${APP_PORT}:${APP_PORT}"
     environment:
@@ -33,10 +33,10 @@ services:
     depends_on:
       - postgres
     networks:
-      - pmp_media_network
+      - ast_nest_network
 
 volumes:
   pg_data: {}
 
 networks:
-  pmp_media_network:
+  ast_nest_network:
